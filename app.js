@@ -18,8 +18,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Routes
 const homeRoute = require('./routes/home');
 app.use('/', homeRoute);
-// const inventoryRoutes = require('./routes/inventory');
-// app.use('/inventory', inventoryRoutes);
+const inventoryRoute = require('./routes/inventory');
+app.use('/inventory', inventoryRoute);
 
 // Start the server
 const PORT = process.env.PORT || 3000;
