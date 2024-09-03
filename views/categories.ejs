@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categories</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Categories</h1>
+    <% if (categories.length > 0) { %>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Visit</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% categories.forEach(categories => { %>
+                    <tr>
+                        <td><%= categories.id %></td>
+                        <td><%= categories.name %></td>
+                        <td><%= categories.description %></td>
+                        <td> <button>></button> </td>
+
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    <% } else { %>
+        <p>No items found.</p>
+    <% } %>
+</body>
+</html>

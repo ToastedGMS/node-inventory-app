@@ -10,6 +10,17 @@ async function getAllParts() {
     }
 }
 
+async function getCategories() {
+    try {
+        const categories = await pool.query('SELECT * FROM categories');
+        return categories.rows;
+    } catch (error) {
+        console.error('Error retrieving categories:', error);
+        throw error;
+    }
+}
+
 module.exports = {
-    getAllParts
+    getAllParts,
+    getCategories
 }
