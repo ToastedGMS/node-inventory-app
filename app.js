@@ -15,6 +15,9 @@ app.set('views', path.join(__dirname, 'views'));
 // Static files
 app.use(express.static(path.join(__dirname, 'public')));
 
+//Middleware
+app.use(express.urlencoded({ extended: true }));
+
 // Routes
 const homeRoute = require('./routes/home');
 app.use('/', homeRoute);
