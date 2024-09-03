@@ -20,7 +20,18 @@ async function getCategories() {
     }
 }
 
+async function getFromCategory(categoryId) {
+    try {
+        const result = await pool.query('SELECT * FROM parts WHERE category_id = $1', [categoryId]);
+        return result.rows;
+    } catch (error) {
+        console.error('Error retrieving items:', error);
+        throw error;
+    }
+}
+
 module.exports = {
     getAllParts,
-    getCategories
+    getCategories,
+    getFromCategory
 }

@@ -38,7 +38,13 @@
                         <td><%= categories.id %></td>
                         <td><%= categories.name %></td>
                         <td><%= categories.description %></td>
-                        <td> <button>></button> </td>
+                        <td>
+                            <form action="/inventory/parts" method="get">
+                              <input type="hidden" name="category_id" value="<%= categories.id %>">
+                              <button type="submit"> View Parts </button>
+                            </form>
+                          </td>
+                          
 
                     </tr>
                 <% }) %>
