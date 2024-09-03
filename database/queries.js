@@ -30,8 +30,20 @@ async function getFromCategory(categoryId) {
     }
 }
 
+async function insertPart(name, description, categoryId, price) {
+    try {
+        await pool.query(
+            'INSERT INTO parts (name, description, category_id, price) VALUES ($1, $2, $3, $4);'
+        , [name, description, categoryId, price])
+    } catch (error) {
+        console.error('Error inserting item to parts table:', error);
+        throw error;
+    }
+}
+
 module.exports = {
     getAllParts,
     getCategories,
-    getFromCategory
+    getFromCategory, 
+    insertPart
 }

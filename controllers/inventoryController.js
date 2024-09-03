@@ -1,4 +1,4 @@
-const { getAllParts, getCategories, getFromCategory } = require('../database/queries');
+const { getAllParts, getCategories, getFromCategory, insertPart } = require('../database/queries');
 
 function getInventory(req, res) {
     try {
@@ -32,7 +32,6 @@ async function showCategories(req, res) {
 async function showFromCategories(req, res) {
     try {
         const categoryId = req.query.category_id;
-        console.log('Category ID:', categoryId);
         const items = await getFromCategory(categoryId);
         res.render('inventoryAll', { items });
     } catch (error) {
@@ -41,10 +40,21 @@ async function showFromCategories(req, res) {
     }
 }
 
+async function addToInventory(req, res) {
+    try {
+        const { name, description, categoryId, price } = req.body;
+        await insertPart(name, description, categoryId, price);
+        res.redirect('/inventory');
+    } catch (error) {
+        console.error('Error adding items to inventory:', error)
+        res.status(500).send('Internal Server Error');
+    }
+}
 
 module.exports = {
     getInventory,
     getAll,
     showCategories,
-    showFromCategories
+    showFromCategories,
+    addToInventory
 };
