@@ -2,7 +2,7 @@ const { getAllParts } = require('../database/queries');
 
 function getInventory(req, res) {
     try {
-        res.render('inventory');
+        res.redirect('/inventory/all');
     } catch (error) {
         console.error('Error rendering inventory view:', error);
         res.status(500).send('Internal Server Error');
