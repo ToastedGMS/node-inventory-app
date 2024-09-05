@@ -1,4 +1,4 @@
-const { getAllParts, getCategories, getFromCategory, insertPart, deletePart } = require('../database/queries');
+const { getAllParts, getCategories, getFromCategory, insertPart, deletePart, updatePart, getParttoUpdate } = require('../database/queries');
 
 function getInventory(req, res) {
     try {
@@ -15,6 +15,15 @@ async function getAll(req,res){
         res.render('inventoryAll', {items});
     } catch (error){
         console.error('Error rendering inventory items:', error);
+        res.status(500).send('Internal Server Error');
+    }
+}
+
+async function renderNew (req, res){
+    try {
+        res.render('newPart');
+    } catch (error) {
+        console.error('Error rendering New Part form:', error);
         res.status(500).send('Internal Server Error');
     }
 }
@@ -62,11 +71,45 @@ async function removePart(req, res) {
     }
 }
 
+async function updateItem(req, res) {
+    try {
+        const { part_id, name, description, price } = req.body;
+
+        await updatePart(part_id, name, description, price)
+
+        res.redirect('/inventory'); 
+    } catch (error) {
+        console.error('Error updating item:', error);
+        res.status(500).send('Internal Server Error');
+    }
+}
+
+async function getUpdate(req, res) {
+    try {
+        const partId = req.params.id;
+
+        const result = await getParttoUpdate(partId);
+
+        if (result.rows.length > 0) {
+            const item = result.rows[0];
+            res.render('editPart', { item });
+        } else {
+            res.status(404).send('Item not found');
+        }
+    } catch (error) {
+        console.error('Error fetching item:', error);
+        res.status(500).send('Internal Server Error');
+    }
+}
+
 module.exports = {
     getInventory,
     getAll,
     showCategories,
     showFromCategories,
     addToInventory,
-    removePart
+    removePart,
+    updateItem,
+    renderNew,
+    getUpdate
 };

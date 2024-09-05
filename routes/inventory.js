@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getInventory, getAll, showCategories, showFromCategories, addToInventory, removePart } = require('../controllers/inventoryController');
+const { getInventory, getAll, showCategories, showFromCategories, addToInventory, removePart, updateItem, renderNew, getUpdate } = require('../controllers/inventoryController');
 
 router.get('/', getInventory );
 
@@ -10,17 +10,14 @@ router.get('/categories', showCategories)
 
 router.get('/parts', showFromCategories)
 
-router.get('/new', (req, res) => {
-    try {
-        res.render('newPart');
-    } catch (error) {
-        console.error('Error rendering New Part form:', error);
-        res.status(500).send('Internal Server Error');
-    }
-})
+router.get('/new', renderNew)
 
 router.post('/new', addToInventory);
 
 router.post('/parts/delete', removePart)
+
+router.get('/parts/edit/:id', getUpdate) 
+
+router.post('/parts/update', updateItem);
 
 module.exports = router;
