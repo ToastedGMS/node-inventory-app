@@ -2,7 +2,7 @@ const pool = require('./pool');
 
 async function getAllParts() {
     try {
-        const result = await pool.query('SELECT * FROM parts');
+        const result = await pool.query('SELECT * FROM parts ORDER BY id');
         return result.rows;
     } catch (error) {
         console.error('Error retrieving inventory items:', error);
@@ -62,7 +62,7 @@ async function getParttoUpdate(partId) {
 async function updatePart(part_id, name, description, price) {
     try {
         await pool.query(
-            'UPDATE parts SET name = $1, description = $2, price = $3 WHERE id = $4',
+            'UPDATE parts SET name = $1, description = $2, price = $3, updated_at = CURRENT_TIMESTAMP WHERE id = $4',
             [name, description, price, part_id]
         );
     } catch (error) {
