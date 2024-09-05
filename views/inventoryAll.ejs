@@ -50,7 +50,10 @@
                               <input type="hidden" name="part_id" value="<%= item.id %>">
                               <button type="submit">Delete Part</button>
                             </form>
-                          </td>
+                            <form action="/inventory/parts/edit/<%= item.id %>" method="get">
+                                <button type="submit">Update Part</button>
+                            </form>
+                        </td>
                     </tr>
                 <% }) %>
             </tbody>

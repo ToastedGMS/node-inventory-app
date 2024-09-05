@@ -50,10 +50,34 @@ async function deletePart(partId){
     }
 }
 
+async function getParttoUpdate(partId) {
+    try {
+        return await pool.query('SELECT * FROM parts WHERE id = $1', [partId]);
+    } catch (error){
+        console.error('Error fetching part:', error);
+        throw error;
+    }
+}
+
+async function updatePart(part_id, name, description, price) {
+    try {
+        await pool.query(
+            'UPDATE parts SET name = $1, description = $2, price = $3 WHERE id = $4',
+            [name, description, price, part_id]
+        );
+    } catch (error) {
+        console.error('Error updating item:', error);
+        throw error; 
+    }
+}
+
+
 module.exports = {
     getAllParts,
     getCategories,
     getFromCategory, 
     insertPart,
-    deletePart
+    deletePart,
+    updatePart,
+    getParttoUpdate
 }
