@@ -41,9 +41,19 @@ async function insertPart(name, description, categoryId, price) {
     }
 }
 
+async function deletePart(partId){
+    try {
+        await pool.query('DELETE FROM parts WHERE id = $1', [partId])
+    } catch (error) {
+        console.error('Error deleting item:', error);
+        throw error;
+    }
+}
+
 module.exports = {
     getAllParts,
     getCategories,
     getFromCategory, 
-    insertPart
+    insertPart,
+    deletePart
 }

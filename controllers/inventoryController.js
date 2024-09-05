@@ -1,4 +1,4 @@
-const { getAllParts, getCategories, getFromCategory, insertPart } = require('../database/queries');
+const { getAllParts, getCategories, getFromCategory, insertPart, deletePart } = require('../database/queries');
 
 function getInventory(req, res) {
     try {
@@ -51,10 +51,22 @@ async function addToInventory(req, res) {
     }
 }
 
+async function removePart(req, res) {
+    try {
+        const partId = req.body.part_id;
+        await deletePart(partId);
+        res.redirect('/inventory')
+    } catch (error) {
+        console.error('Error removing item from inventory:', error)
+        res.status(500).send('Internal Server Error');
+    }
+}
+
 module.exports = {
     getInventory,
     getAll,
     showCategories,
     showFromCategories,
-    addToInventory
+    addToInventory,
+    removePart
 };

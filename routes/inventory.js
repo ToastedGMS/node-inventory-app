@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getInventory, getAll, showCategories, showFromCategories, addToInventory } = require('../controllers/inventoryController');
+const { getInventory, getAll, showCategories, showFromCategories, addToInventory, removePart } = require('../controllers/inventoryController');
 
 router.get('/', getInventory );
 
@@ -20,5 +20,7 @@ router.get('/new', (req, res) => {
 })
 
 router.post('/new', addToInventory);
+
+router.post('/parts/delete', removePart)
 
 module.exports = router;
